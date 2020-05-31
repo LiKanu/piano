@@ -3,6 +3,8 @@
  */
 package piano;
 
+import java.util.ArrayList;
+
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -27,9 +29,11 @@ public class App extends PApplet{
     //定义暂停开始的幂等标志位
     int flag = -1;
     Block blockPosition;
+    ArrayList<Block> blocks;
 
     public App(){
       blockPosition = new Block();
+      blocks = new ArrayList<Block>();
     }
 
     @Override
@@ -169,7 +173,12 @@ public class App extends PApplet{
      * 绘制block
      */
     public void drawBlock(){
-      image(block, blockPosition.getX(), blockPosition.getY());
+      //绘制一个block
+      //image(block, blockPosition.getX(), blockPosition.getY());
+      //遍历所有的集合
+      for (Block blo : blocks) {
+        image(block, blo.getX(), blo.getY());
+      }
     }
 
     //part 3 -1 首先我们要界定鼠标点击的区域，只有点击区域在gridl内点击才会出现block
@@ -179,8 +188,10 @@ public class App extends PApplet{
         //blockPosition.setX(mouseX);
         //blockPosition.setY(mouseY);
         //System.out.println(mouseX+","+mouseY);
+        //计算block的坐标
         blockPosition.setX((int)((int)(mouseX - 60) / 15) * 15 + 60);
         blockPosition.setY((int)((int)(mouseY - 75) / 20) * 20 + 75);
+        blocks.add(blockPosition);
       }
     }
 
