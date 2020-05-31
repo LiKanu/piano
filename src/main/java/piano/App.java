@@ -29,7 +29,10 @@ public class App extends PApplet{
     //定义暂停开始的幂等标志位
     int flag = -1;
     Block blockPosition;
+    //定义Block集合
     ArrayList<Block> blocks;
+    //定义碰撞的滑块的个数
+    int countBlocks = 0;
 
     public App(){
       blockPosition = new Block();
@@ -76,6 +79,12 @@ public class App extends PApplet{
       drawButton();
       //绘制block
       drawBlock();
+      //碰撞统计
+      countBlocks = knockIntoBlock();
+      if(countBlocks!=0){
+        System.out.println(countBlocks + "个blocks");
+      }
+      
     }
     //part1：背景贴图
     public void drawBackgroud(){
@@ -200,6 +209,18 @@ public class App extends PApplet{
         //至此思路是完全对的，没有任何问题
       }
     }
+
+    //part 4:碰撞检测
+    public int knockIntoBlock(){
+      int n = 0;
+      for (Block blo : blocks) {
+        if(blo.getX() == pointX){//block中点的x坐标和准线相等即视为碰撞
+          n ++;//统计碰撞的点的个数，后面会用到
+        }
+      }
+      return n;
+    }
+
 
     public static void main(String[] args) {
         PApplet.main("piano.App");
