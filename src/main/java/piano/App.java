@@ -34,7 +34,7 @@ public class App extends PApplet{
     //定义Block集合
     ArrayList<Block> blocks;
     //定义碰撞的滑块的个数
-    int countBlocks = 0;
+    Block tmpBlock;
     //定义音乐播放对象
     Minim minim;
     AudioPlayer player1;
@@ -235,23 +235,25 @@ public class App extends PApplet{
     }
 
     //part 4:碰撞检测
-    public int knockIntoBlock(){
-      int n = 0;
+    public Block knockIntoBlock(){
+      Block tmp = new Block();
+      //int n = 0;
       for (Block blo : blocks) {
         if(blo.getX() == pointX){//block中点的x坐标和准线相等即视为碰撞
-          n ++;//统计碰撞的点的个数，后面会用到
+          //n ++;//统计碰撞的点的个数，后面会用到
+          tmp = blo;
         }
       }
-      return n;
+      return tmp;
     }
     /**
      * part 5:音乐播放
      */
     public void playMusic(){    
-      countBlocks = knockIntoBlock();
-      if(countBlocks!=0){
-        int a = blockPosition.getY();
-        System.out.println(a);
+      tmpBlock = knockIntoBlock();
+      if(tmpBlock != null){
+        int a = tmpBlock.getY();
+        //System.out.println(a);
         if(a < 335 && a >= 305){//音符1,30    
           player1.play(1000);
         }else if(a < 305 && a >= 265){//音符2,40
@@ -264,7 +266,7 @@ public class App extends PApplet{
           player5.play(1000);
         }else if(a < 165 && a >= 125){//音符6,40
           player6.play(1000);
-        }else {//音符7,30
+        }else if(a < 125 && a >= 95){//音符7,30
           player7.play(1000);
         }       
       }
