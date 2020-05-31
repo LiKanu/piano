@@ -3,3 +3,9 @@
 
 # Ignore Gradle build output directory
 build
+
+# 忽略VSCode生成文件夹
+.settings
+bin
+*.classpath
+*.project
