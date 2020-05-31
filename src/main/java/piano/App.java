@@ -26,9 +26,10 @@ public class App extends PApplet{
     int pointerVX;
     //定义暂停开始的幂等标志位
     int flag = -1;
+    Block blockPosition;
 
     public App(){
-
+      blockPosition = new Block();
     }
 
     @Override
@@ -69,6 +70,8 @@ public class App extends PApplet{
       //绘制暂停，播放键
       //part 2-3
       drawButton();
+      //绘制block
+      drawBlock();
     }
     //part1：背景贴图
     public void drawBackgroud(){
@@ -113,6 +116,8 @@ public class App extends PApplet{
       ctrlPointer();
       //点击停止按钮
       clickStop();
+      //点击grid绘制block
+      clickGrid();
     }
     /**part2-3-1
      * 点击暂停播放按钮判定逻辑
@@ -158,6 +163,22 @@ public class App extends PApplet{
         pointerVX = 0;//暂停也就是速度为0
       }else{
         pointerVX = 1;
+      }
+    }
+    /**
+     * 绘制block
+     */
+    public void drawBlock(){
+      image(block, blockPosition.getX(), blockPosition.getY());
+    }
+
+    //part 3 -1 首先我们要界定鼠标点击的区域，只有点击区域在gridl内点击才会出现block
+    public void clickGrid(){
+      if(mouseX > 60 && mouseX < 540 && mouseY > 75 && mouseY < 335){//点击在Grid区域内
+        blockPosition = new Block();//每点击一次就要创建一个新的Block
+        blockPosition.setX(mouseX);
+        blockPosition.setY(mouseY);
+
       }
     }
 
