@@ -5,6 +5,8 @@ package piano;
 
 import java.util.ArrayList;
 
+import ddf.minim.AudioPlayer;
+import ddf.minim.Minim;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -33,6 +35,15 @@ public class App extends PApplet{
     ArrayList<Block> blocks;
     //定义碰撞的滑块的个数
     int countBlocks = 0;
+    //定义音乐播放对象
+    Minim minim;
+    AudioPlayer player1;
+    AudioPlayer player2;
+    AudioPlayer player3;
+    AudioPlayer player4;
+    AudioPlayer player5;
+    AudioPlayer player6;
+    AudioPlayer player7;
 
     public App(){
       blockPosition = new Block();
@@ -47,6 +58,7 @@ public class App extends PApplet{
 
     @Override
     public void setup() {
+      frameRate(60);//设置帧率
       //2、加载resource中的图片
       banner = loadImage("banner.png");
       block = loadImage("block.png");
@@ -62,6 +74,15 @@ public class App extends PApplet{
       pointerX = 49;
       pointX = 60;
       pointerVX = 0; 
+      //加载音乐播放文件
+      minim = new Minim(this);
+      player1 = minim.loadFile("1.mp3");
+      player2 = minim.loadFile("2.mp3");
+      player3 = minim.loadFile("3.mp3");
+      player4 = minim.loadFile("4.mp3");
+      player5 = minim.loadFile("5.mp3");
+      player6 = minim.loadFile("6.mp3");
+      player7 = minim.loadFile("7.mp3");
     }
     
     @Override
@@ -80,10 +101,13 @@ public class App extends PApplet{
       //绘制block
       drawBlock();
       //碰撞统计
-      countBlocks = knockIntoBlock();
+      /* countBlocks = knockIntoBlock();
       if(countBlocks!=0){
         System.out.println(countBlocks + "个blocks");
-      }
+        player1.play(1000);
+      } */
+      //音乐播放
+      playMusic();
       
     }
     //part1：背景贴图
@@ -219,6 +243,31 @@ public class App extends PApplet{
         }
       }
       return n;
+    }
+    /**
+     * part 5:音乐播放
+     */
+    public void playMusic(){    
+      countBlocks = knockIntoBlock();
+      if(countBlocks!=0){
+        int a = blockPosition.getY();
+        System.out.println(a);
+        if(a < 335 && a >= 305){//音符1,30    
+          player1.play(1000);
+        }else if(a < 305 && a >= 265){//音符2,40
+          player2.play(1000);
+        }else if(a < 265 && a >= 235){//音符3,30
+          player3.play(1000);
+        }else if(a < 235 && a >= 205){//音符4,30
+          player4.play(1000);
+        }else if(a < 205 && a >= 165){//音符5,40
+          player5.play(1000);
+        }else if(a < 165 && a >= 125){//音符6,40
+          player6.play(1000);
+        }else {//音符7,30
+          player7.play(1000);
+        }       
+      }
     }
 
 

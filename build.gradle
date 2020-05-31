@@ -27,10 +27,12 @@ repositories {
 dependencies {
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:28.1-jre'
-	//processing dependency
-	implementation 'org.processing:core:3.3.7'
+	  //processing dependency
+	  implementation 'org.processing:core:3.3.7'
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
+    //minim库
+    compile group: 'ddf.minim', name: 'ddf.minim', version: '2.2.0'
 }
 
 application {
