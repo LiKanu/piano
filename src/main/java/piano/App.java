@@ -191,7 +191,13 @@ public class App extends PApplet{
         //计算block的坐标
         blockPosition.setX((int)((int)(mouseX - 60) / 15) * 15 + 60);
         blockPosition.setY((int)((int)(mouseY - 75) / 20) * 20 + 75);
-        blocks.add(blockPosition);
+        //blocks.add(blockPosition);
+        if(blocks.contains(blockPosition)){//如果新点击的元素包含在原集合中
+          blocks.remove(blockPosition);//已经存在就删除
+        }else{
+          blocks.add(blockPosition);//不存在就添加进去
+        }
+        //至此思路是完全对的，没有任何问题
       }
     }
 
