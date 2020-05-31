@@ -176,9 +176,11 @@ public class App extends PApplet{
     public void clickGrid(){
       if(mouseX > 60 && mouseX < 540 && mouseY > 75 && mouseY < 335){//点击在Grid区域内
         blockPosition = new Block();//每点击一次就要创建一个新的Block
-        blockPosition.setX(mouseX);
-        blockPosition.setY(mouseY);
-
+        //blockPosition.setX(mouseX);
+        //blockPosition.setY(mouseY);
+        //System.out.println(mouseX+","+mouseY);
+        blockPosition.setX((int)((int)(mouseX - 60) / 15) * 15 + 60);
+        blockPosition.setY((int)((int)(mouseY - 75) / 20) * 20 + 75);
       }
     }
 
