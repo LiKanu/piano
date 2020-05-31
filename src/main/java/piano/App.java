@@ -4,8 +4,21 @@
 package piano;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class App extends PApplet{
+    //1、定义要加载的图片背景对象
+    PImage banner;
+    PImage block;
+    PImage buttonBack;
+    PImage grid;
+    PImage keyboard;
+    PImage middleBanner;
+    PImage pause;
+    PImage play;
+    PImage pointer;
+    PImage stop;
+
 
     public App(){
 
@@ -13,16 +26,39 @@ public class App extends PApplet{
 
     @Override
     public void settings() {
-      
+      size(540,335);
+      //设置app界面大小，这里的设置是固定的，不用修改，图片等相关尺寸都是设计好，不需要再修改
     }
 
     @Override
     public void setup() {
-      
+      //2、加载resource中的图片
+      banner = loadImage("banner.png");
+      block = loadImage("block.png");
+      buttonBack = loadImage("buttonBack.png");
+      grid = loadImage("grid.png");
+      keyboard = loadImage("keyboard.png");
+      middleBanner = loadImage("middleBanner.png");
+      pause = loadImage("pause.png");
+      play = loadImage("play.png");
+      pointer = loadImage("pointer.png");
+      stop = loadImage("stop.png");
+
     }
     
     @Override
     public void draw() {
+      //3、绘画图片到APP界面上
+      //draw()会按照代码顺序无限循环执行下面的代码，
+      //所以图片加载的顺序很重要，后面加载的图片会覆盖前面的
+      image(middleBanner, 0, 0);
+      image(banner, 0, 0);
+      image(buttonBack, 5, 5);
+      image(buttonBack, 50, 5);
+      image(keyboard, 0, 75);
+      image(grid, 60, 75);
+      image(pause, 5, 5);
+      image(stop, 50, 5);
       
     }
 
