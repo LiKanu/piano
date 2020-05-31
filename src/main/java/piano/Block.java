@@ -31,5 +31,15 @@ public class Block {
   public void setY(int y) {
     this.y = y;
   }
+
+  @Override
+  public boolean equals(Object obj) {
+    Block block = (Block) obj;
+    if(this.x == block.x && this.y == block.y){
+      return true;
+    }
+    
+    return super.equals(obj);
+  }
   
 }
