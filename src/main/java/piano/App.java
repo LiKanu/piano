@@ -18,7 +18,14 @@ public class App extends PApplet{
     PImage play;
     PImage pointer;
     PImage stop;
-
+    //定义游标的X坐标
+    int pointerX;
+    //定义准线的X坐标
+    int pointX;
+    //定义游标和准线的运行速度，因为游标准线是一起运动，所以同一个速度就可以了
+    int pointerVX;
+    //定义暂停开始的幂等标志位
+    int flag = -1;
 
     public App(){
 
@@ -43,7 +50,10 @@ public class App extends PApplet{
       play = loadImage("play.png");
       pointer = loadImage("pointer.png");
       stop = loadImage("stop.png");
-
+      //设置游标准线的起始x坐标和速度
+      pointerX = 49;
+      pointX = 60;
+      pointerVX = 0; 
     }
     
     @Override
@@ -51,17 +61,105 @@ public class App extends PApplet{
       //3、绘画图片到APP界面上
       //draw()会按照代码顺序无限循环执行下面的代码，
       //所以图片加载的顺序很重要，后面加载的图片会覆盖前面的
+      //part 1
+      drawBackgroud();
+      //part 2-1、2
+      //绘制游标准线，此时游标准线已经可以运动了
+      drawPointerAndButton();
+      //绘制暂停，播放键
+      //part 2-3
+      drawButton();
+    }
+    //part1：背景贴图
+    public void drawBackgroud(){
       image(middleBanner, 0, 0);
       image(banner, 0, 0);
       image(buttonBack, 5, 5);
       image(buttonBack, 50, 5);
       image(keyboard, 0, 75);
       image(grid, 60, 75);
-      image(pause, 5, 5);
+      //image(pause, 5, 5);
+      //image(play, 5, 5);//这个是后来添加的
       image(stop, 50, 5);
-      
     }
 
+    /**
+     * part2-1、2:绘制游标准线及运动
+     */
+    public void drawPointerAndButton(){
+      //加载游标
+      image(pointer, pointerX,59);
+      //绘制准线
+      //设置准线颜色
+      stroke(255,0,0);//红色
+      line(pointX, 75, pointX, height);
+      //添加速度
+      pointX += pointerVX;
+      pointerX += pointerVX;
+      //添加越界判断，让游标到做右边回到起始位置
+      if(pointX == width){//如果准线x坐标等于UI的宽
+        pointX = 60;//准线回到起始位置
+        pointerX = 49;//游标回到起始位置
+      }//只需要判断准线就够了，因为准线在游右边，先抵达边界
+    }
+
+    /**
+     * part2-3：添加鼠标事件
+     */
+    public void mousePressed(){
+      //事件判定添加到鼠标事件中，生效
+      clickPlayAndPause();
+      //控制准线
+      ctrlPointer();
+      //点击停止按钮
+      clickStop();
+    }
+    /**part2-3-1
+     * 点击暂停播放按钮判定逻辑
+     */
+    public void clickPlayAndPause(){
+      //mouseX,mouseY是鼠标点击在屏幕的坐标
+      if(mouseX > 5 && mouseX < 45 && mouseY > 5 && mouseY < 45){//如果点击的是播放和暂停的按钮区域
+        flag *= -1;//每按一次按钮，flag 运算一次乘以一次-1 
+      }
+    }
+    /**
+     * part 2 -5
+     */
+    public void clickStop(){
+      //点击的区域是stop按钮
+      if(mouseX > 50 && mouseX < 90 && mouseY > 5 && mouseY < 45){//cl
+        //准线，游标归零
+        pointX = 60;
+        pointerX = 49;
+        //速度归零
+        pointerVX = 0;
+        //播放暂停还原成播放按钮
+        flag = -1;
+      }
+    }
+    /**
+     * part 2-3-2绘制按钮
+     */
+    public void drawButton(){
+      if(flag == -1){//此处假定flag == -1时，是暂停
+        //加载播放按钮，因为游标的初始状态静止的，而按钮要显示播放按钮，点击后切换成暂停
+        image(play, 5, 5);
+      }else{
+        //加载暂停按钮
+        image(pause,5, 5);
+      }
+    }
+    /**
+     * part 2-4,按钮控制准线运动
+     */
+    public void ctrlPointer(){
+      if(flag == -1){//此处假定flag == -1时，是暂停
+        pointerVX = 0;//暂停也就是速度为0
+      }else{
+        pointerVX = 1;
+      }
+    }
 
     public static void main(String[] args) {
         PApplet.main("piano.App");
