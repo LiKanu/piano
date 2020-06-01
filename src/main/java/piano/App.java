@@ -144,7 +144,7 @@ public class App extends PApplet{
     }
 
     /**
-     * part2-3：添加鼠标事件
+     * part2-3：添加鼠标点击事件
      */
     public void mousePressed(){
       //事件判定添加到鼠标事件中，生效
@@ -155,6 +155,17 @@ public class App extends PApplet{
       clickStop();
       //点击grid绘制block
       clickGrid();
+    }
+    /**
+     * part 6 :添加鼠标拖拽事件
+     */
+    public void mouseDragged() {
+      //鼠标在中间的刻度标尺初
+      if(mouseX > 60 && mouseX < 540 && mouseY > 50 && mouseY < 75){
+        pointerX = mouseX - 11;//游标跟随鼠标，因为游标图片的坐标在准线的左边，所以大约要减去这个长度
+        pointX = mouseX; //准线跟孙鼠标
+        pointerVX = 0; //未来看清楚效果，我将准线速度变成0
+      }
     }
     /**part2-3-1
      * 点击暂停播放按钮判定逻辑
@@ -178,6 +189,8 @@ public class App extends PApplet{
         pointerVX = 0;
         //播放暂停还原成播放按钮
         flag = -1;
+        //part 6:清空Blocks集合
+        blocks.clear();
       }
     }
     /**
