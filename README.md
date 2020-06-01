@@ -1,7 +1,8 @@
 #### 在VSCode 下开发的processing项目
 
 一个电子钢琴
-![part6](part6.gif)
+![part6](final.gif)
+
 在方格上点击不同的区域，演奏不同的音符。
 
 ##### 基本介绍
